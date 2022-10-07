@@ -1,0 +1,1 @@
+# yaml-lint-docker
