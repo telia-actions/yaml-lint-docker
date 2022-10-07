@@ -1,0 +1,13 @@
+name: YAML Lint
+description: Run YAML Lint validation
+inputs:
+  path:
+    description: File(s) or directory
+    required: false    
+runs:
+  using: docker
+  image: docker://casf-docker-prod-local/telia-company/yaml-lint-docker/
+  env:
+    GITHUB_ACTIONS: "true"
+    GITHUB_WORKFLOW: "{{ github.workflow.name }}"
+    INPUT_CONFIG_FILE: ${{ inputs.path }}
