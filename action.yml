@@ -6,7 +6,7 @@ inputs:
     required: false    
 runs:
   using: docker
-  image: docker://casf-docker-prod-local/telia-company/yaml-lint-docker/
+  image: docker://casf-docker-prod-local.jfrog.teliacompany.io/casf-docker-prod-local/telia-company/yaml-lint-docker
   env:
     GITHUB_ACTIONS: "true"
     GITHUB_WORKFLOW: "{{ github.workflow.name }}"
