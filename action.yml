@@ -3,13 +3,15 @@ description: Run YAML Lint validation
 inputs:
   path:
     description: File(s) or directory
-    required: false    
+    required: false
+runs.pre:
+  using: "composite"
+  steps:
+    - run: echo "${{ secrets.JFROG_PASSWORD }}" | docker login docker.pkg.github.com -u "${{ secrets.JFROG_USER }}" --password-stdin
+      shell: bash
 runs:
   using: docker
   image: docker://casf-docker-prod-local.jfrog.teliacompany.io/casf-docker-prod-local/telia-company/yaml-lint-docker
-  credentials:
-    username: "{{ secrets.JFROG_USER }}"
-    password: "{{ secrets.JFROG_PASSWORD }}"
   env:
     GITHUB_ACTIONS: "true"
     GITHUB_WORKFLOW: "{{ github.workflow.name }}"
