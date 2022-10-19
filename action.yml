@@ -7,7 +7,7 @@ inputs:
   docker_username:
     description: Username for lint docker image
     required: true
-  docker_password
+  docker_password:
     description: Password for lint docker image
     required: true
 runs:
