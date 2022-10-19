@@ -13,12 +13,10 @@ inputs:
 runs:  
   using: "composite"
   steps:
-    - run: echo "${{ DOCKER_PASSWORD }}" | docker login docker.pkg.github.com -u "${{ DOCKER_USERNAME }}" --password-stdin
+    - run: echo "${{ inputs.docker_password }}" | docker login docker.pkg.github.com -u "${{ inputs.docker_username }}" --password-stdin
       shell: bash  
     - uses: docker://casf-docker-prod-local.jfrog.teliacompany.io/casf-docker-prod-local/telia-company/yaml-lint-docker
       with:
-        DOCKER_USERNAME: ${{ inputs.docker_username }}
-        DOCKER_PASSWORD: ${{ inputs.docker_password }}
         GITHUB_ACTIONS: "true"
         GITHUB_WORKFLOW: "{{ github.workflow.name }}"
         INPUT_CONFIG_FILE: ${{ inputs.path }}    
