@@ -15,8 +15,7 @@ runs:
   steps:
     - run: echo "${{ DOCKER_USERNAME }}" | docker login docker.pkg.github.com -u "${{ DOCKER_PASSWORD }}" --password-stdin
       shell: bash  
-    - using: docker
-      image: docker://casf-docker-prod-local.jfrog.teliacompany.io/casf-docker-prod-local/telia-company/yaml-lint-docker
+    - uses: docker://casf-docker-prod-local.jfrog.teliacompany.io/casf-docker-prod-local/telia-company/yaml-lint-docker
    env:
      GITHUB_ACTIONS: "true"
      GITHUB_WORKFLOW: "{{ github.workflow.name }}"
