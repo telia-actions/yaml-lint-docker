@@ -16,9 +16,9 @@ runs:
     - run: echo "${{ DOCKER_PASSWORD }}" | docker login docker.pkg.github.com -u "${{ DOCKER_USERNAME }}" --password-stdin
       shell: bash  
     - uses: docker://casf-docker-prod-local.jfrog.teliacompany.io/casf-docker-prod-local/telia-company/yaml-lint-docker
-  env:
-    GITHUB_ACTIONS: "true"
-    GITHUB_WORKFLOW: "{{ github.workflow.name }}"
-    INPUT_CONFIG_FILE: ${{ inputs.path }}
-    DOCKER_USERNAME: ${{ inputs.docker_username }}
-    DOCKER_PASSWORD: ${{ inputs.docker_password }}
+      with:
+        DOCKER_USERNAME: ${{ inputs.docker_username }}
+        DOCKER_PASSWORD: ${{ inputs.docker_password }}
+        GITHUB_ACTIONS: "true"
+        GITHUB_WORKFLOW: "{{ github.workflow.name }}"
+        INPUT_CONFIG_FILE: ${{ inputs.path }}    
