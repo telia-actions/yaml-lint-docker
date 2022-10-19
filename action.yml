@@ -4,15 +4,25 @@ inputs:
   path:
     description: File(s) or directory
     required: false
-runs.pre:
-  using: "composite"
-  steps:
-    - run: echo "${{ secrets.JFROG_PASSWORD }}" | docker login docker.pkg.github.com -u "${{ secrets.JFROG_USER }}" --password-stdin
-      shell: bash
+  docker_username:
+    description: Username for lint docker image
+    required: true
+  docker_password
+    description: Password for lint docker image
+    required: true
 runs:
-  using: docker
-  image: docker://casf-docker-prod-local.jfrog.teliacompany.io/casf-docker-prod-local/telia-company/yaml-lint-docker
-  env:
-    GITHUB_ACTIONS: "true"
-    GITHUB_WORKFLOW: "{{ github.workflow.name }}"
-    INPUT_CONFIG_FILE: ${{ inputs.path }}
+  pre:
+    using: "composite"
+    steps:
+      - run: echo "${{ DOCKER_USERNAME }}" | docker login docker.pkg.github.com -u "${{ DOCKER_PASSWORD }}" --password-stdin
+        shell: bash
+    env:
+      DOCKER_USERNAME: ${{ inputs.docker_username }}
+      DOCKER_PASSWORD: ${{ inputs.docker_password }}
+  main:
+    using: docker
+    image: docker://casf-docker-prod-local.jfrog.teliacompany.io/casf-docker-prod-local/telia-company/yaml-lint-docker
+    env:
+      GITHUB_ACTIONS: "true"
+      GITHUB_WORKFLOW: "{{ github.workflow.name }}"
+      INPUT_CONFIG_FILE: ${{ inputs.path }}
